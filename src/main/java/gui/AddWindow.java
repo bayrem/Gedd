@@ -221,7 +221,7 @@ public class AddWindow extends javax.swing.JFrame {
               
               // ************************************
               try{
-                  File f2 = new File("C:/Users/BRM/Desktop/My Studies/Workspace/Gedd/root/"+f.getName());
+                  File f2 = new File("root/"+f.getName());
                   InputStream in = new FileInputStream(f);
 
                   //For Append the file.
