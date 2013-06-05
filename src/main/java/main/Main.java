@@ -24,6 +24,7 @@ public class Main {
 	    	  MainWindow window = new MainWindow();
 	    	  window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    	  window.setPreferredSize(new Dimension(726, 600));
+	    	  window.setTitle("Gestion electronique de documents - GED");
 	    	  window.pack();
 	    	  window.setVisible(true);
 	      }
