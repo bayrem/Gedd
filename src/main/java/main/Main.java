@@ -7,6 +7,8 @@ import gui.MainWindow;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import core.Ged;
+
 public class Main {
 
 	/**
@@ -14,6 +16,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		Ged ged = new Ged();
 		SwingUtilities.invokeLater(new Runnable()
 	    {
 	      public void run()

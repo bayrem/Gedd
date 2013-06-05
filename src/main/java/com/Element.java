@@ -12,4 +12,28 @@ public abstract class Element {
 	
 	public abstract void modifier();
 	public abstract void ouvrir();
+	
+	public String getTitre(){
+		return this.titre;
+	}
+	
+	public String getAuteur(){
+		return this.auteur;
+	}
+	
+	public String getDate(){
+		return this.dateCreation;
+	}
+	
+	public void setTitre(String s){
+		
+	}
+	
+	public void setAuteur(String s){
+		
+	}
+	
+	public void setDate(String s){
+		
+	}
 }

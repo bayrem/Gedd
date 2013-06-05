@@ -5,6 +5,7 @@
 package gui;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -166,6 +167,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+    	String dirName = "root\\rep\\";
+		File dir = new File(dirName);
+    	boolean isCreated = dir.mkdirs();
+    	if (isCreated == true)
+    		System.out.println("dossier créer");
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

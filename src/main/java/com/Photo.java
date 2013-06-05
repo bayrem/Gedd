@@ -2,10 +2,13 @@ package com;
 
 public class Photo extends Element {
 
+	
+	
+	
 	@Override
 	public void modifier() {
 		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
