@@ -221,8 +221,14 @@ public class AddWindow extends javax.swing.JFrame {
               
               // ************************************
               try{
-            	  //tatiana
-                  File f2 = new File("root/"+f.getName());
+            	  
+            	  String dirName = "C:\\root";
+          		  File dir = new File(dirName);
+              	  boolean isCreated = dir.mkdirs();
+                  if (isCreated == true)
+              	  System.out.println("dossier créer");
+              	
+                  File f2 = new File("C:/root/"+f.getName());
                   InputStream in = new FileInputStream(f);
 
                   //For Append the file.
