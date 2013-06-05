@@ -221,6 +221,7 @@ public class AddWindow extends javax.swing.JFrame {
               
               // ************************************
               try{
+            	  //blaah blablabla
                   File f2 = new File("root/"+f.getName());
                   InputStream in = new FileInputStream(f);
 
