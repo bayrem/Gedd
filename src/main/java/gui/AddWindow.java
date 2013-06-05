@@ -221,8 +221,7 @@ public class AddWindow extends javax.swing.JFrame {
               
               // ************************************
               try{
-            	  //tatiana
-                  File f2 = new File("root/"+f.getName());
+                  File f2 = new File("C:\\root\\"+f.getName());
                   InputStream in = new FileInputStream(f);
 
                   //For Append the file.
