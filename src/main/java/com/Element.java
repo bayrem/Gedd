@@ -7,6 +7,7 @@ public abstract class Element {
 	private String titre;
 	private String auteur;
 	private String dateCreation;
+	private String type;
 	private List<String> tags;
 	private List<String> series;
 	
@@ -26,14 +27,21 @@ public abstract class Element {
 	}
 	
 	public void setTitre(String s){
+		this.titre = s;
 		
 	}
 	
 	public void setAuteur(String s){
-		
+		this.auteur = s;
 	}
 	
 	public void setDate(String s){
-		
+		this.dateCreation = s;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

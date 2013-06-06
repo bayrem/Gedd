@@ -2,7 +2,10 @@ package com;
 
 public class Photo extends Element {
 
-	
+	public Photo(String name){
+		this.setTitre(name);
+		this.setType("photo");
+	}
 	
 	
 	@Override
