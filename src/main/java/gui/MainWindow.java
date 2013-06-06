@@ -278,6 +278,23 @@ public class MainWindow extends javax.swing.JFrame {
 	      }
 	    });
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        SwingUtilities.invokeLater(new Runnable()
+	    {
+	      public void run()
+	      {
+	    	  
+	    	  jList1.setModel(new javax.swing.AbstractListModel() {
+                  String[] strings  = ged.rechercher("ABC");
+                  public int getSize() { return strings.length; }
+                  public Object getElementAt(int i) { return strings[i]; }
+              });
+                  
+	      }
+	    });
+    }//GEN-LAST:event_jButton2ActionPerformed
 
   
     

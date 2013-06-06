@@ -90,5 +90,21 @@ public class Ged {
 		return liste.size();
 	}
 	
+	public String[] rechercher(String rech){
+		int j=0;
+		String[] tab = new String[j];
+		for(int i=0;i<liste.size();i++){
+			if(liste.get(i).getTitre().equals(rech)){
+				tab[j]=liste.get(i).getTitre();
+				System.out.println(tab[j]);
+				j++;
+			}
+				
+		}
+		return tab;
+		
+		
+	}
+	
 
 }
