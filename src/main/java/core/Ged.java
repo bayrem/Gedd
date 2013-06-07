@@ -8,9 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.UserPrincipal;
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -30,9 +31,12 @@ public class Ged {
 		liste.add(new Doc("ABCDE"));
 	}
 	
-	public void afficherElement() {
+	public void afficherElements() {
 		for (int i= 0; i< liste.size();i++)
-			System.out.println(liste.get(i).getTitre());
+			System.out.println(liste.get(i).getTitre()+" "+liste.get(i).getAuteur()+" "
+		+liste.get(i).getDate()+" "+liste.get(i).getType()+" "+liste.get(i).tagstoString()
+		+" "+liste.get(i).seriestoString());
+		
 	}
 	
 	public void remplirList(Element elem){
@@ -42,40 +46,28 @@ public class Ged {
 	}
 	
 	public void ajouterElement(File f) throws IOException{
-		FileSystemView vueSysteme = FileSystemView.getFileSystemView();
 		Element elem;
 		
 		//recuperation de l'extension
 		String extenstion = f.getName().substring(f.getName().toString().length()-3);
 		System.out.println("extension: "+extenstion);
 		
+		//set current date
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		System.out.println(dateFormat.format(date));
+		
 		//test de creation du document
 		switch (extenstion) {
-		case "jpg": elem = new Photo(f.getName());
+		case "jpg": elem = new Photo(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
 			
-		case "flv": elem = new Video(f.getName());
+		case "flv": elem = new Video(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
 
-		default: elem = new Doc(f.getName());
+		default: elem = new Doc(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
 		}
-		
-		
-		//recuperation dateModification
-		Locale locale = Locale.getDefault();
-		NumberFormat nf = NumberFormat.getInstance(locale);
-		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
-		String dateFile = dateFormat.format(new Date(f.lastModified()));
-		elem.setDate(dateFile);
-		System.out.println("date de modifacation: "+elem.getDate());
-		
-		//recuperation de l'auteur
-		Path path = Paths.get(f.getAbsolutePath());
-		UserPrincipal auteur = Files.getOwner(path);
-		String nomAuteur = auteur.getName();
-		elem.setAuteur(nomAuteur);
-		System.out.println("auteur: "+elem.getAuteur());
 		
 		//test d'ajout dans la liste
 		System.out.println(liste.size());
@@ -84,8 +76,7 @@ public class Ged {
 		System.out.println(liste.size());
 		
 		//test liste
-		for(int i=0; i<liste.size();i++)
-			System.out.println(liste.get(i).getTitre()+" "+liste.get(i).getAuteur()+" "+liste.get(i).getDate()+" "+liste.get(i).getType());
+		afficherElements();
 	}
 	
 	public String[] gedToTable(List<Element> lst){

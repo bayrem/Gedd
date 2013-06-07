@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
@@ -24,6 +25,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import com.SQLiteDemo;
+
 import core.Ged;
 
 
@@ -31,6 +34,7 @@ public class MainWindow1 {
 
 	private Ged ged = new Ged();
 	public JFrame frmGed;
+	private SQLiteDemo gedBD = new SQLiteDemo(ged);
 	private JTextField textField;
 	private JFileChooser choixfichier1;
 	private String dirName;
@@ -39,8 +43,14 @@ public class MainWindow1 {
 	
 	/**
 	 * Create the application.
+	 * @throws SQLException 
 	 */
-	public MainWindow1() {
+	public MainWindow1() throws SQLException {
+		//gedBD.CreateTables();
+		/*if(gedBD.getElements().equals(null))
+			gedBD.CreateTables();
+		
+		else gedBD.getElements();*/
 		initialize();
 	}
 
@@ -48,6 +58,7 @@ public class MainWindow1 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frmGed = new JFrame();
 		frmGed.setTitle("GED");
 		frmGed.setBounds(100, 100, 680, 452);
@@ -67,7 +78,7 @@ public class MainWindow1 {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(401, 110, 263, 213);
-		panel.setBorder((Border) new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "M\u00E9tadonn\u00E9es", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panel.setBorder((Border) new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Metadonnees", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		frmGed.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -162,7 +173,7 @@ public class MainWindow1 {
 		btnModifier.setBounds(547, 352, 117, 49);
 		btnModifier.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				MetaWindow frame = new MetaWindow();
+				MetaWindow frame = new MetaWindow(ged, null);
 				frame.setVisible(true);
 			}
 		});
@@ -187,7 +198,11 @@ public class MainWindow1 {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-		                  //ged.afficherElement();
+		                //creation ou modification des metadonnées
+		                  MetaWindow frame = new MetaWindow(ged,f.getName());
+		  				  frame.setVisible(true);
+		  				  
+		               // copie physique des document
 		               // ************************************
 		                  try{
 		                      File f2 = new File("C:\\root\\"+f.getName());
@@ -216,15 +231,17 @@ public class MainWindow1 {
 		                    catch(IOException e){
 		                      System.out.println(e.getMessage());      
 		                    }
-		                  //***************************************
-		                  list_1.setModel(new javax.swing.AbstractListModel() {
-		          			String[] values= ged.gedToTable(ged.getList());
-		                      public int getSize() { return ged.getListSize(); }
-		                      public Object getElementAt(int i) { return values[i]; }
-
-		          		});
+		                  
 			      }
 			    });
+				
+				//***************************************
+                list_1.setModel(new javax.swing.AbstractListModel() {
+        			String[] values= ged.gedToTable(ged.getList());
+                    public int getSize() { return ged.getListSize(); }
+                    public Object getElementAt(int i) { return values[i]; }
+
+        		});
 			}
 		});
 		

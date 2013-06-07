@@ -4,7 +4,14 @@ public class Doc extends Element {
 	
 	public Doc(String name){
 		this.setTitre(name);
-		this.setType("Document");
+		this.setType("document");
+	}
+	
+	public Doc(String titre, String auteur,String dateCreation, String type){
+		this.setAuteur(auteur);
+		this.setTitre(titre);
+		this.setDate(dateCreation);
+		this.setType(type);
 	}
 
 	@Override

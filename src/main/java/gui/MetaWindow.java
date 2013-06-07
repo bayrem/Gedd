@@ -20,38 +20,29 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
 
+import core.Ged;
+
 
 public class MetaWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5847650559150958504L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	 private String input,input1,input2;
 	 private JTextField textField_3;
 	 private JTextField textField_4;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MetaWindow frame = new MetaWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public MetaWindow() {
+	public MetaWindow(final Ged ged, final String titre) {
 		setTitle("M\u00E9tadonn\u00E9e");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 535, 261);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -77,7 +68,7 @@ public class MetaWindow extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(22, 17, 484, 227);
-		panel.setBorder(new TitledBorder(null, "M\u00E9tadonn\u00E9e", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panel.setBorder(new TitledBorder(null, "Metadonnee", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		contentPane.add(panel);
 		
 		textField = new JTextField();
@@ -115,16 +106,28 @@ public class MetaWindow extends JFrame {
 		panel.add(lblDate);
 		
 		JButton btnEnregistrer = new JButton("Enregistrer");
-		btnEnregistrer.setIcon(new ImageIcon("/Users/rosetatiana/Documents/workspace/appli/images/enreg.jpg"));
+		btnEnregistrer.setIcon(new ImageIcon("images/enreg.jpg"));
 		btnEnregistrer.setBounds(324, 121, 136, 44);
 		btnEnregistrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				input = textField.getText();
-				//lblTitre_1.setText(input);
-				input1 = textField_1.getText();
-				//lblAuteur_1.setText(input1);
-				input2= textField_2.getText();
-				//lblDate_1.setText(input2);
+				
+				for (int i=0;i<ged.getListSize();i++)
+					if(ged.getList().get(i).getTitre().equals(titre)){
+						if(!textField.getText().isEmpty())
+							ged.getList().get(i).setTitre(textField.getText());
+						if(!textField_1.getText().isEmpty())
+							ged.getList().get(i).setAuteur(textField_1.getText());
+						if(!textField_2.getText().isEmpty())
+							ged.getList().get(i).setDate(textField_2.getText());
+						if(!textField_3.getText().isEmpty())
+							ged.getList().get(i).setTags(textField_3.getText()+",");
+						if(!textField_4.getText().isEmpty())
+							ged.getList().get(i).setSeries(textField_4.getText()+",");
+						
+					}
+						
+				ged.afficherElements();
+				dispose();
 			}
 		});
 		panel.add(btnEnregistrer);

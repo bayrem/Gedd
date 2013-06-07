@@ -7,6 +7,13 @@ public class Photo extends Element {
 		this.setType("photo");
 	}
 	
+	public Photo(String titre, String auteur,String dateCreation, String type){
+		this.setAuteur(auteur);
+		this.setTitre(titre);
+		this.setDate(dateCreation);
+		this.setType(type);
+	}
+	
 	
 	@Override
 	public void modifier() {

@@ -7,10 +7,11 @@ public class Video extends Element {
 		this.setType("video");
 	}
 	
-	public Video(String titre, String auteur,String dateCreation){
+	public Video(String titre, String auteur,String dateCreation, String type){
 		this.setAuteur(auteur);
 		this.setTitre(titre);
 		this.setDate(dateCreation);
+		this.setType(type);
 	}
 	
 	@Override

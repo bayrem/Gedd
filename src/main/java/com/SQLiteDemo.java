@@ -30,6 +30,10 @@ public class SQLiteDemo
 	    }
 	}
 	
+	public SQLiteDemo(Ged g){
+		this.gedd = g;
+	}
+	
 	public void supprimer(String titre)
 	{
 		connecter();
@@ -56,11 +60,22 @@ public class SQLiteDemo
 	      ResultSet rs = stmt.executeQuery( "SELECT * FROM Document" );
 	    
 	      while ( rs.next() ) {
+	    	 Element elem;
 	         String titre = rs.getString("Titre");
 	         String  auteur = rs.getString("Auteur");
 	         String datecreation = rs.getString("DateCreation");
 	         String type=rs.getString("Type");
-			 Video elem= new Video(titre,auteur,datecreation);
+	      switch (type) {
+	 		case "photo": elem = new Photo(titre,auteur,datecreation,type);
+	 			break;
+	 			
+	 		case "video": elem = new Video(titre,auteur,datecreation,type);
+	 			break;
+
+	 		default: elem = new Doc(titre,auteur,datecreation,type);
+	 			break;
+	 		}
+	         
 			gedd.remplirList(elem);	      
 	          }
 	      
@@ -131,7 +146,7 @@ public class SQLiteDemo
 		connecter();
 		try{
 	      String sql = "INSERT INTO Document " +
-	                   "VALUES ('"+elem.getTitre()+"','"+elem.getAuteur()+"','"+elem.getDate()+"','photo');"; 
+	                   "VALUES ('"+elem.getTitre()+"','"+elem.getAuteur()+"','"+elem.getDate()+"','"+elem.getType()+"');"; 
 	      stmt.executeUpdate(sql);
 	      stmt.close();
 	      c.commit();
@@ -170,7 +185,7 @@ public void ImporterTag(Element elem)
     
       while ( rs.next() ) {
          String description = rs.getString("Titre");
-		 elem.setTags().add(description);
+		 elem.getTags().add(description);
 			      
           }
       
@@ -195,7 +210,7 @@ public void ImporterSerie(Element elem)
     
       while ( rs.next() ) {
          String description = rs.getString("Titre");
-		 elem.setTags().add(description);
+		 elem.getTags().add(description);
 			      
           }
       
