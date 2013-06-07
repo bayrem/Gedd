@@ -7,6 +7,12 @@ public class Video extends Element {
 		this.setType("video");
 	}
 	
+	public Video(String titre, String auteur,String dateCreation){
+		this.setAuteur(auteur);
+		this.setTitre(titre);
+		this.setDate(dateCreation);
+	}
+	
 	@Override
 	public void modifier() {
 		// TODO Auto-generated method stub

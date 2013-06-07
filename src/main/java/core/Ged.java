@@ -1,5 +1,7 @@
 package core;
 
+
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,6 +33,12 @@ public class Ged {
 	public void afficherElement() {
 		for (int i= 0; i< liste.size();i++)
 			System.out.println(liste.get(i).getTitre());
+	}
+	
+	public void remplirList(Element elem){
+		
+		liste.add(elem);
+		
 	}
 	
 	public void ajouterElement(File f) throws IOException{
@@ -90,6 +98,7 @@ public class Ged {
 	public List<Element> getList(){
 		return this.liste;
 	}
+	
 	
 	public List<Element> getRechList(){
 		return this.rechList;

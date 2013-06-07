@@ -44,4 +44,12 @@ public abstract class Element {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public List<String> setTags()
+	{
+		return this.tags;
+	}
+	public List<String> setSerie()
+	{
+		return this.series;
+	}
 }
