@@ -111,7 +111,7 @@ public class Ged {
 	public void rechercher(String rech){
 		rechList = new ArrayList<Element>();
 		for(int i=0;i<liste.size();i++){
-			if(liste.get(i).getTitre().equals(rech)){
+			if(liste.get(i).getTitre().contains(rech)){
 				rechList.add(liste.get(i));
 			}
 				

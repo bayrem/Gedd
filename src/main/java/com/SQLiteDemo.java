@@ -13,6 +13,7 @@ public class SQLiteDemo
 	public Ged gedd = new Ged();//à changer par la gedd du projet
 	Connection c = null;
     Statement stmt = null;
+    
 	public void connecter()
 	{
 		
@@ -108,6 +109,7 @@ public class SQLiteDemo
 	    }
 	    System.out.println("Records created successfully");
 	  }
+	
 	public void InsertSerie(Element elem,String Serie)
 	{connecter();
 	try{

@@ -101,17 +101,6 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        /*try {
-
-            String path = "Bayureme.jpg";
-            File file = new File(path);
-            BufferedImage image = ImageIO.read(new File("Bayureme.jpg"));
-            JLabel label = new JLabel(new ImageIcon(image));
-            jPanel1.add(label);
-
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

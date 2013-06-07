@@ -1,8 +1,9 @@
 package main;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 
-import gui.MainWindow;
+import gui.*;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -16,19 +17,16 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Ged ged = new Ged();
-		SwingUtilities.invokeLater(new Runnable()
-	    {
-	      public void run()
-	      {
-	    	  MainWindow window = new MainWindow();
-	    	  window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    	  window.setPreferredSize(new Dimension(726, 600));
-	    	  window.setTitle("Gestion electronique de documents - GED");
-	    	  window.pack();
-	    	  window.setVisible(true);
-	      }
-	    });
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainWindow1 window = new MainWindow1();
+					window.frmGed.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 	}
 
