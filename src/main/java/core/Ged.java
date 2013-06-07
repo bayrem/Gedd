@@ -20,6 +20,7 @@ import com.*;
 public class Ged {
 	
 	private List<Element> liste;
+	private List<Element> rechList;
 	
 	public Ged(){
 		liste = new ArrayList<Element>();
@@ -79,30 +80,33 @@ public class Ged {
 			System.out.println(liste.get(i).getTitre()+" "+liste.get(i).getAuteur()+" "+liste.get(i).getDate()+" "+liste.get(i).getType());
 	}
 	
-	public String[] gedToTable(){
-		String[] elem = new String[liste.size()] ;
-		for (int i=0; i<liste.size();i++)
-			elem[i] = liste.get(i).getTitre();
+	public String[] gedToTable(List<Element> lst){
+		String[] elem = new String[lst.size()] ;
+		for (int i=0; i<lst.size();i++)
+			elem[i] = lst.get(i).getTitre();
 		return elem;
+	}
+	
+	public List<Element> getList(){
+		return this.liste;
+	}
+	
+	public List<Element> getRechList(){
+		return this.rechList;
 	}
 	
 	public int getListSize(){
 		return liste.size();
 	}
 	
-	public String[] rechercher(String rech){
-		int j=0;
-		String[] tab = new String[j];
+	public void rechercher(String rech){
+		rechList = new ArrayList<Element>();
 		for(int i=0;i<liste.size();i++){
 			if(liste.get(i).getTitre().equals(rech)){
-				tab[j]=liste.get(i).getTitre();
-				System.out.println(tab[j]);
-				j++;
+				rechList.add(liste.get(i));
 			}
 				
 		}
-		return tab;
-		
 		
 	}
 	
