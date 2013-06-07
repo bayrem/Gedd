@@ -331,7 +331,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
     	System.out.println(jButton1.getText());
-    	ged.rechercher("ABC");
+    	ged.rechercher("ABCDE");
     	jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings =  ged.gedToTable(ged.getRechList());
             public int getSize() { return strings.length; }
