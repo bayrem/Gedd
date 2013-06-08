@@ -122,8 +122,18 @@ public class MetaWindow extends JFrame {
 						if(!textField_3.getText().isEmpty())
 							ged.getList().get(i).setTags(textField_3.getText()+",");
 						if(!textField_4.getText().isEmpty())
-							ged.getList().get(i).setSeries(textField_4.getText()+",");
+							ged.getList().get(i).setSeries(textField_4.getText()+",");	
 						
+						//modifier la liste des tag de la ged
+						String s = textField_3.getText()+",";
+						int j=0;
+						for (int i1=0; i1<s.length();i1++){
+							if(s.charAt(i1) == ','){
+								String str = s.substring(j, i1);
+								j=i1+1;
+									ged.addTag(str, ged.getList().get(i).getTitre());
+							}
+						}
 					}
 						
 				ged.afficherElements();

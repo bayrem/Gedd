@@ -24,9 +24,20 @@ public class Ged {
 	
 	private List<Element> liste;
 	private List<Element> rechList;
+	private List<Tag> tags;
+	
+	public void addTag(String s, String str){
+		Tag t = new Tag(s,str);
+		for(int i=0;i<tags.size();i++)
+			if(tags.get(i).getName().equals(s)){
+				tags.get(i).addLivre(str); break;}
+		
+		tags.add(t);		
+	}
 	
 	public Ged(){
 		liste = new ArrayList<Element>();
+		tags = new ArrayList<Tag>();
 		liste.add(new Doc("ABC"));
 		liste.add(new Doc("ABCDE"));
 	}
@@ -108,6 +119,11 @@ public class Ged {
 				
 		}
 		
+	}
+	
+	public void afficherTag(){
+		for(int i=0;i<tags.size();i++)
+			System.out.println(tags.get(i).getName());
 	}
 	
 
