@@ -25,19 +25,32 @@ public class Ged {
 	private List<Element> liste;
 	private List<Element> rechList;
 	private List<Tag> tags;
+	private List<Serie> series;
 	
-	public void addTag(String s, String str){
+	public boolean addTag(String s, String str){
 		Tag t = new Tag(s,str);
 		for(int i=0;i<tags.size();i++)
 			if(tags.get(i).getName().equals(s)){
-				tags.get(i).addLivre(str); break;}
+				tags.get(i).addLivre(str); return true;}
 		
 		tags.add(t);		
+		return true;
+	}
+	
+	public boolean addSerie(String s, String str){
+		Serie s1 = new Serie(s,str);
+		for(int i=0;i<series.size();i++)
+			if(series.get(i).getName().equals(s)){
+				series.get(i).addLivre(str); return true;}
+		
+		series.add(s1);		
+		return true;
 	}
 	
 	public Ged(){
 		liste = new ArrayList<Element>();
 		tags = new ArrayList<Tag>();
+		series = new ArrayList<Serie>();
 		liste.add(new Doc("ABC"));
 		liste.add(new Doc("ABCDE"));
 	}
@@ -60,7 +73,7 @@ public class Ged {
 		Element elem;
 		
 		//recuperation de l'extension
-		String extenstion = f.getName().substring(f.getName().toString().length()-3);
+		String extenstion = f.getName().substring(f.getName().toString().length()-3).toLowerCase();
 		System.out.println("extension: "+extenstion);
 		
 		//set current date
@@ -70,11 +83,17 @@ public class Ged {
 		
 		//test de creation du document
 		switch (extenstion) {
-		case "jpg": elem = new Photo(f.getName()); elem.setDate(dateFormat.format(date));
+		case ("jpg"): elem = new Photo(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
+			
+		case ("png"): elem = new Photo(f.getName()); elem.setDate(dateFormat.format(date));
+		break;
 			
 		case "flv": elem = new Video(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
+			
+		case "wmv": elem = new Video(f.getName()); elem.setDate(dateFormat.format(date));
+		break;
 
 		default: elem = new Doc(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
@@ -112,18 +131,61 @@ public class Ged {
 	
 	public void rechercher(String rech){
 		rechList = new ArrayList<Element>();
-		for(int i=0;i<liste.size();i++){
-			if(liste.get(i).getTitre().contains(rech)){
-				rechList.add(liste.get(i));
+		
+		if(rech.equals(""))
+			rechList = liste;
+		else{
+			// recherche par mot cle**********************
+			for(int i=0;i<liste.size();i++){
+				if(liste.get(i).getTitre().contains(rech)){
+					rechList.add(liste.get(i));
+				}	
 			}
-				
+			//********************************************
+			rechercheParTag(rech);
+			rechercheParSerie(rech);
 		}
 		
+	}
+	
+	private void rechercheParTag(String rech){
+		// recherche par tag**************************
+				for(int i=0; i<tags.size();i++){
+					if(tags.get(i).getName().equals(rech)){
+						for (int j=0; j<liste.size();j++){
+							for(int i1=0;i1<tags.get(i).getLstLivre().size();i1++){
+								if(tags.get(i).getLstLivre().get(i1).equals(liste.get(j).getTitre()))
+									rechList.add(liste.get(j));
+							}
+						}
+					}	
+				}
+				//********************************************
+	}
+	
+	private void rechercheParSerie(String rech){
+		// recherche par tag**************************
+				for(int i=0; i<series.size();i++){
+					if(series.get(i).getName().equals(rech)){
+						for (int j=0; j<liste.size();j++){
+							for(int i1=0;i1<series.get(i).getLstLivre().size();i1++){
+								if(series.get(i).getLstLivre().get(i1).equals(liste.get(j).getTitre()))
+									rechList.add(liste.get(j));
+							}
+						}
+					}	
+				}
+				//********************************************
 	}
 	
 	public void afficherTag(){
 		for(int i=0;i<tags.size();i++)
 			System.out.println(tags.get(i).getName());
+	}
+	
+	public void afficherSerie(){
+		for(int i=0;i<series.size();i++)
+			System.out.println(series.get(i).getName());
 	}
 	
 

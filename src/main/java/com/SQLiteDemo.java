@@ -19,15 +19,16 @@ public class SQLiteDemo
 		
 	    try {
 	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:DB3.db");
+	      c = DriverManager.getConnection("jdbc:sqlite:DB55.db");
 	      c.setAutoCommit(false);
 	      System.out.println("Opened database successfully");
 	      stmt = c.createStatement();
 	    }
 	    catch(Exception e)
-	    {
-	    	
+	    {System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
 	    }
+	    System.out.println("Operation done successfully");
 	}
 	
 	public SQLiteDemo(Ged g){
@@ -234,7 +235,7 @@ public void CreateTables() throws SQLException
             String sql = "CREATE TABLE Document(Titre char(30)Primary key,Auteur char(30), DateCreation char(20),Type char(20))";
             stmt.executeUpdate(sql);
 			} catch ( Exception e ) {
-				System.err.println("Erreur creation table Document"+ e.getClass().getName() + ": " + e.getMessage() );
+				System.err.println("Erreur creation table Document "+ e.getClass().getName() + ": " + e.getMessage() );
 				System.exit(0);
 			}
 			try{

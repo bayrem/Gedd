@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileInputStream;
@@ -210,6 +211,17 @@ public class MainWindow1 {
 		btnNewButton_1.setIcon(new ImageIcon("images/ouvrir.jpg"));
 		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent arg0) {
+				File f = new File("C:\\root\\"+ele.getTitre());
+				if(f.canExecute()){
+					Desktop dt = Desktop.getDesktop();
+				    try {
+						dt.open(f);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+					
 			}
 		});
 		frmGed.getContentPane().add(btnNewButton_1);
@@ -219,7 +231,7 @@ public class MainWindow1 {
 		btnModifier.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				if(ele != null){
-					MetaWindow frame = new MetaWindow(ged, null);
+					MetaWindow frame = new MetaWindow(ged, ele.getTitre());
 					frame.setVisible(true);
 				}
 				
@@ -303,6 +315,7 @@ public class MainWindow1 {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				System.out.println(btnRechercher.getText());
 				ged.afficherTag();
+				ged.afficherSerie();
 		    	ged.rechercher(textField.getText());
 		    	list_1.setModel(new javax.swing.AbstractListModel() {
 		            String[] strings =  ged.gedToTable(ged.getRechList());

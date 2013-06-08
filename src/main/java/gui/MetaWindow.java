@@ -15,6 +15,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 import javax.swing.JMenuItem;
@@ -113,8 +115,16 @@ public class MetaWindow extends JFrame {
 				
 				for (int i=0;i<ged.getListSize();i++)
 					if(ged.getList().get(i).getTitre().equals(titre)){
-						if(!textField.getText().isEmpty())
-							ged.getList().get(i).setTitre(textField.getText());
+						if(!textField.getText().isEmpty()){
+							File f = new File("C:\\root\\"+ged.getList().get(i).getTitre());
+							//recupérer l'extension************
+							String extenstion = f.getName().substring(f.getName().toString().length()-3);
+							System.out.println("extension: "+extenstion);
+							//*********************************
+							File f1 = new File("C:\\root\\"+textField.getText()+"."+extenstion);
+							ged.getList().get(i).setTitre(textField.getText()+"."+extenstion.toLowerCase());
+							f.renameTo(f1);
+							}
 						if(!textField_1.getText().isEmpty())
 							ged.getList().get(i).setAuteur(textField_1.getText());
 						if(!textField_2.getText().isEmpty())
@@ -132,6 +142,17 @@ public class MetaWindow extends JFrame {
 								String str = s.substring(j, i1);
 								j=i1+1;
 									ged.addTag(str, ged.getList().get(i).getTitre());
+							}
+						}
+						
+						//modifier la liste des serie de la ged
+						String ser = textField_4.getText()+",";
+						int j1=0;
+						for (int i1=0; i1<ser.length();i1++){
+							if(ser.charAt(i1) == ','){
+								String str = ser.substring(j1, i1);
+								j1=i1+1;
+									ged.addSerie(str, ged.getList().get(i).getTitre());
 							}
 						}
 					}
