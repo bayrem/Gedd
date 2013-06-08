@@ -117,14 +117,19 @@ public class MetaWindow extends JFrame {
 					if(ged.getList().get(i).getTitre().equals(titre)){
 						if(!textField.getText().isEmpty()){
 							File f = new File("C:\\root\\"+ged.getList().get(i).getTitre());
+							//String prvname = ged.getList().get(i).getTitre();
+							
 							//recupérer l'extension************
 							String extenstion = f.getName().substring(f.getName().toString().length()-3);
 							System.out.println("extension: "+extenstion);
 							//*********************************
+							
+							//changement du nom physique sur le disque
 							File f1 = new File("C:\\root\\"+textField.getText()+"."+extenstion);
 							ged.getList().get(i).setTitre(textField.getText()+"."+extenstion.toLowerCase());
 							f.renameTo(f1);
 							}
+						
 						if(!textField_1.getText().isEmpty())
 							ged.getList().get(i).setAuteur(textField_1.getText());
 						if(!textField_2.getText().isEmpty())
@@ -155,6 +160,7 @@ public class MetaWindow extends JFrame {
 									ged.addSerie(str, ged.getList().get(i).getTitre());
 							}
 						}
+						ged.gedBD.setElement(ged.getList().get(i), titre);
 					}
 						
 				ged.afficherElements();

@@ -36,6 +36,7 @@ import com.Element;
 import com.SQLiteDemo;
 
 import core.Ged;
+import javax.swing.JScrollBar;
 
 
 public class MainWindow1 {
@@ -43,7 +44,6 @@ public class MainWindow1 {
 	private Ged ged = new Ged();
 	private Element ele;
 	public JFrame frmGed;
-	private SQLiteDemo gedBD = new SQLiteDemo(ged);
 	private JTextField textField;
 	private JFileChooser choixfichier1;
 	private String dirName;
@@ -55,11 +55,10 @@ public class MainWindow1 {
 	 * @throws SQLException 
 	 */
 	public MainWindow1() throws SQLException {
-		//gedBD.CreateTables();
-		/*if(gedBD.getElements().equals(null))
-			gedBD.CreateTables();
-		
-		else gedBD.getElements();*/
+		if(ged.gedBD.getElements().equals(null))
+			//ged.gedBD.CreateTables();
+			ged.gedBD.DropAllTable();
+		//else ged.gedBD.getElements();
 		initialize();
 	}
 
@@ -246,6 +245,8 @@ public class MainWindow1 {
 		btnModifier.setIcon(new ImageIcon("images/custom_dialog.png"));
 		frmGed.getContentPane().add(btnModifier);
 		
+		
+		// Action listener du bouton ajout
 		btnAjouterDocument.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent arg0) {
 				SwingUtilities.invokeLater(new Runnable()
@@ -274,9 +275,6 @@ public class MainWindow1 {
 		                      File f2 = new File("C:\\root\\"+f.getName());
 		                      InputStream in = new FileInputStream(f);
 
-		                      //For Append the file.
-		                      //OutputStream out = new FileOutputStream(f2,true);
-
 		                      //For Overwrite the file.
 		                      OutputStream out = new FileOutputStream(f2);
 
@@ -302,6 +300,8 @@ public class MainWindow1 {
 			    });
 				
 				//***************************************
+				
+				//actualisation de la liste
                 list_1.setModel(new javax.swing.AbstractListModel() {
         			String[] values= ged.gedToTable(ged.getList());
                     public int getSize() { return ged.getListSize(); }
@@ -311,6 +311,7 @@ public class MainWindow1 {
 			}
 		});
 		
+		// Actionlistner du bouton recherche
 		btnRechercher.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				System.out.println(btnRechercher.getText());

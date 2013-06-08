@@ -26,6 +26,7 @@ public class Ged {
 	private List<Element> rechList;
 	private List<Tag> tags;
 	private List<Serie> series;
+	public SQLiteDemo gedBD = new SQLiteDemo(this);
 	
 	public boolean addTag(String s, String str){
 		Tag t = new Tag(s,str);
@@ -51,8 +52,6 @@ public class Ged {
 		liste = new ArrayList<Element>();
 		tags = new ArrayList<Tag>();
 		series = new ArrayList<Serie>();
-		liste.add(new Doc("ABC"));
-		liste.add(new Doc("ABCDE"));
 	}
 	
 	public void afficherElements() {
@@ -105,8 +104,16 @@ public class Ged {
 		System.out.println("fichier ajouter à la ged");
 		System.out.println(liste.size());
 		
-		//test liste
+		//test affichache de la liste
 		afficherElements();
+		
+		//insertion de l'element dans la base de donnee
+		this.gedBD.InsertDocument(elem);
+		for(int i=0;i<elem.getTags().size();i++)
+			this.gedBD.InsertTag(elem, elem.getTags().get(i));
+		for(int j=0;j<elem.getSeries().size();j++)
+			this.gedBD.InsertSerie(elem, elem.getSeries().get(j));
+		
 	}
 	
 	public String[] gedToTable(List<Element> lst){

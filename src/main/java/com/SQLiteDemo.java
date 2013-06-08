@@ -10,7 +10,7 @@ import core.Ged;
  */
 public class SQLiteDemo
 {
-	public Ged gedd = new Ged();//à changer par la gedd du projet
+	public Ged gedd;
 	Connection c = null;
     Statement stmt = null;
     
@@ -21,14 +21,14 @@ public class SQLiteDemo
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection("jdbc:sqlite:DB55.db");
 	      c.setAutoCommit(false);
-	      System.out.println("Opened database successfully");
+	      System.out.println("connecter : Opened database successfully");
 	      stmt = c.createStatement();
 	    }
 	    catch(Exception e)
 	    {System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
+	    System.out.println("conncter : Operation done successfully");
 	}
 	
 	public SQLiteDemo(Ged g){
@@ -49,7 +49,7 @@ public class SQLiteDemo
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
+	    System.out.println("supprimer : Operation done successfully");
 	  }
 
 	
@@ -76,8 +76,10 @@ public class SQLiteDemo
 	 		default: elem = new Doc(titre,auteur,datecreation,type);
 	 			break;
 	 		}
-	         
-			gedd.remplirList(elem);	      
+	      
+	    //ImporterSerie(elem);
+	    //ImporterTag(elem);
+		gedd.remplirList(elem);	      
 	          }
 	      
 	      c.commit();
@@ -88,7 +90,7 @@ public class SQLiteDemo
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-		System.out.println("Operation done successfully");
+		System.out.println("getelement : Operation done successfully");
 		return gedd;
 	    
 	}
@@ -107,7 +109,7 @@ public class SQLiteDemo
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		    }
-		    System.out.println("Operation done successfully");
+		    System.out.println("droptable : Operation done successfully");
 		}	
 	
 	public void InsertTag(Element elem,String tag)
@@ -123,7 +125,7 @@ public class SQLiteDemo
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Records created successfully");
+	    System.out.println("inserttag : Records created successfully");
 	  }
 	
 	public void InsertSerie(Element elem,String Serie)
@@ -139,7 +141,7 @@ public class SQLiteDemo
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Records created successfully");
+	    System.out.println("insertserie : Records created successfully");
 	  }
 	
 	public void InsertDocument(Element elem)
@@ -156,7 +158,7 @@ public class SQLiteDemo
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Records created successfully");
+	    System.out.println("insertdocument : Records created successfully");
 	  }
 	
 
@@ -175,7 +177,7 @@ public class SQLiteDemo
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
+	    System.out.println("updateelement : Operation done successfully");
 	  }
 	
 public void ImporterTag(Element elem)
@@ -198,7 +200,7 @@ public void ImporterTag(Element elem)
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
       System.exit(0);
     }
-	System.out.println("Operation done successfully");
+	System.out.println("importertag : Operation done successfully");
 	
 
 
@@ -223,7 +225,7 @@ public void ImporterSerie(Element elem)
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
       System.exit(0);
     }
-	System.out.println("Operation done successfully");
+	System.out.println("importerserie : Operation done successfully");
 	
 }
 	
@@ -275,7 +277,7 @@ public void CreateTables() throws SQLException
             stmt.close();
   	      	c.close();
   	    
-  	    System.out.println("Operation done successfully");
+  	    System.out.println("createtables : Operation done successfully");
   	  }
   	
         
