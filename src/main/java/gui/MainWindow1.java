@@ -272,6 +272,9 @@ public class MainWindow1 {
 		               // copie physique des document
 		               // ************************************
 		                  try{
+		                	  File doss = new File("C:\\root\\");
+		                	  if(!doss.exists())
+		                		  doss.mkdir();
 		                      File f2 = new File("C:\\root\\"+f.getName());
 		                      InputStream in = new FileInputStream(f);
 
