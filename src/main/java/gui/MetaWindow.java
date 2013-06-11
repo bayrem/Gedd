@@ -1,13 +1,12 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -17,8 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
 import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
 
@@ -112,21 +109,24 @@ public class MetaWindow extends JFrame {
 		btnEnregistrer.setBounds(324, 121, 136, 44);
 		btnEnregistrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//recupérer l'extension************
+				File f = new File("C:\\root\\"+titre);
+				//String prvname = ged.getList().get(i).getTitre();
+				String extenstion = f.getName().substring(f.getName().toString().length()-3);
+				System.out.println("extension: "+extenstion);
+				//*********************************
+				String nouvTitre = textField.getText()+"."+extenstion;
 				for (int i=0;i<ged.getListSize();i++)
 					if(ged.getList().get(i).getTitre().equals(titre)){
 						if(!textField.getText().isEmpty()){
-							File f = new File("C:\\root\\"+ged.getList().get(i).getTitre());
-							//String prvname = ged.getList().get(i).getTitre();
-							
-							//recupérer l'extension************
-							String extenstion = f.getName().substring(f.getName().toString().length()-3);
-							System.out.println("extension: "+extenstion);
-							//*********************************
-							
-							//changement du nom physique sur le disque
-							File f1 = new File("C:\\root\\"+textField.getText()+"."+extenstion);
-							ged.getList().get(i).setTitre(textField.getText()+"."+extenstion.toLowerCase());
+							for(int j=0;j<ged.getList().size();j++)
+								if(ged.getList().get(j).getTitre().equals(nouvTitre) && i!=j){
+									nouvTitre = textField.getText()+"_1."+extenstion.toLowerCase();
+									String st="Ce nom existe deja votre doc sera enregistrer comme :"+nouvTitre;
+									JOptionPane.showMessageDialog(null,st);
+								}
+							File f1 = new File("C:\\root\\"+nouvTitre);
+							ged.getList().get(i).setTitre(nouvTitre);
 							f.renameTo(f1);
 							}
 						

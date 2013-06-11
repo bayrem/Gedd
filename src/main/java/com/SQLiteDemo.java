@@ -131,7 +131,7 @@ public class SQLiteDemo
 	public void InsertSerie(Element elem,String Serie)
 	{connecter();
 	try{
-	      String sql = "INSERT INTO Organisation " +
+	      String sql = "INSERT INTO Collection " +
 	                   "VALUES ('"+Serie+"','"+elem.getTitre()+"');"; 
 	      stmt.executeUpdate(sql);
 	      stmt.close();

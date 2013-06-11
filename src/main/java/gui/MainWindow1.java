@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,14 +14,12 @@ import java.sql.SQLException;
 import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
@@ -45,20 +42,19 @@ public class MainWindow1 {
 	private Element ele;
 	public JFrame frmGed;
 	private JTextField textField;
-	private JFileChooser choixfichier1;
-	private String dirName;
-	private String [] column ={"Titre" , "Auteur" , "Date" , "Tag"};
-
-	
 	/**
 	 * Create the application.
 	 * @throws SQLException 
 	 */
 	public MainWindow1() throws SQLException {
-		if(ged.gedBD.getElements().equals(null))
-			//ged.gedBD.CreateTables();
-			ged.gedBD.DropAllTable();
-		//else ged.gedBD.getElements();
+		File doss = new File("C:\\root\\");
+  	  	if(!doss.exists())
+  		  doss.mkdir();
+  	  	//File dbF = new File("DB55.db");
+  	  	//if(!dbF.exists())
+  	  		//ged.gedBD.CreateTables();
+  	  	//else
+  	  		ged.gedBD.getElements();
 		initialize();
 	}
 
@@ -69,7 +65,7 @@ public class MainWindow1 {
 		
 		frmGed = new JFrame();
 		frmGed.setTitle("GED");
-		frmGed.setBounds(100, 100, 680, 452);
+		frmGed.setBounds(100, 100, 846, 563);
 		frmGed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGed.getContentPane().setLayout(null);
 		
@@ -85,7 +81,7 @@ public class MainWindow1 {
 		frmGed.getContentPane().add(btnRechercher);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(401, 110, 263, 213);
+		panel.setBounds(465, 110, 320, 345);
 		panel.setBorder((Border) new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Metadonnees", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		frmGed.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -103,11 +99,11 @@ public class MainWindow1 {
 		panel.add(lblDateDeCration);
 		
 		JLabel lblTags = new JLabel("Tags :");
-		lblTags.setBounds(17, 130, 61, 16);
+		lblTags.setBounds(17, 161, 61, 16);
 		panel.add(lblTags);
 		
 		JLabel lblSrie = new JLabel("Serie :");
-		lblSrie.setBounds(17, 158, 61, 16);
+		lblSrie.setBounds(17, 235, 61, 16);
 		panel.add(lblSrie);
 		
 		final JLabel lblNewLabel = new JLabel("N/A");
@@ -123,20 +119,19 @@ public class MainWindow1 {
 		panel.add(lblNewLabel_2);
 		
 		final JLabel lblNewLabel_3 = new JLabel("N/A");
-		lblNewLabel_3.setBounds(140, 130, 61, 16);
+		lblNewLabel_3.setBounds(140, 161, 61, 16);
 		panel.add(lblNewLabel_3);
 		
 		final JLabel lblNewLabel_4 = new JLabel("N/A");
-		lblNewLabel_4.setBounds(140, 158, 127, 16);
+		lblNewLabel_4.setBounds(140, 235, 127, 16);
 		panel.add(lblNewLabel_4);
 		
-		final JLabel lblNewLabel_5 = new JLabel("New label");
-		File f = new File("images/degache.jpg");
+		final JLabel lblNewLabel_5 = new JLabel("Apperçu non valable");
 		lblNewLabel_5.setIcon(new ImageIcon("images/dossier_GED.png"));
-		lblNewLabel_5.setBounds(16, 30, 168, 239);
+		lblNewLabel_5.setBounds(10, 22, 130, 309);
 		
 		final JPanel panel_1 = new JPanel();
-		panel_1.setBounds(188, 110, 201, 291);
+		panel_1.setBounds(288, 113, 150, 342);
 		panel_1.setBorder(new TitledBorder(null, "Aper\u00E7u", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		frmGed.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -154,7 +149,7 @@ public class MainWindow1 {
 		btnNewButton.setIcon(new ImageIcon("images/icone_partager.png"));
 		frmGed.getContentPane().add(btnNewButton);
 		
-		JList list = new JList();
+		JList<?> list = new JList();
 		list.setBounds(26, 258, 130, -47);
 		frmGed.getContentPane().add(list);
 		
@@ -180,16 +175,22 @@ public class MainWindow1 {
 				switch(ele.getType()){
 				case "document" : 
 					break;
-				case "photo" : lblNewLabel_5.setIcon(new ImageIcon("C:\\root\\"+ele.getTitre())); panel_1.add(lblNewLabel_5);
+				case "photo" : {/*
+					JLabel lblNewLabel_5 = new JLabel("Apperçu non valable");
+					lblNewLabel_5.setIcon(new ImageIcon("images/degache.jpg"));
+					lblNewLabel_5.setBounds(16, 30, 168, 239);
+					panel_1.add(lblNewLabel_5);
+					panel_1.revalidate();*/
+				}
 					break;
 				case "video" :
 					break;
 				}
-				lblNewLabel_5.setIcon(new ImageIcon("images/degache.jpg"));
+				
 			}	
 		}
 		
-		list_1.setBounds(27, 110, 150, 291);
+		list_1.setBounds(27, 110, 237, 345);
 		// n'autorise qu'une seule ligne de selection
 		list_1.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		// ajoute un écouteur
@@ -206,7 +207,7 @@ public class MainWindow1 {
 		
 		
 		JButton btnNewButton_1 = new JButton("Ouvrir");
-		btnNewButton_1.setBounds(401, 352, 135, 49);
+		btnNewButton_1.setBounds(558, 465, 135, 49);
 		btnNewButton_1.setIcon(new ImageIcon("images/ouvrir.jpg"));
 		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent arg0) {
@@ -226,7 +227,7 @@ public class MainWindow1 {
 		frmGed.getContentPane().add(btnNewButton_1);
 		
 		JButton btnModifier = new JButton("Modifier");
-		btnModifier.setBounds(547, 352, 117, 49);
+		btnModifier.setBounds(703, 465, 117, 49);
 		btnModifier.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				if(ele != null){
@@ -235,10 +236,8 @@ public class MainWindow1 {
 				}
 				
 				else {
-					JPopupMenu pop = new JPopupMenu();
-					JLabel jlb = new JLabel();
-					jlb.setText("Aucun element choisit");
-						pop.add(jlb);
+					String st="Aucun element choisit";
+					JOptionPane.showMessageDialog(null,st);
 				}
 			}
 		});
@@ -272,9 +271,6 @@ public class MainWindow1 {
 		               // copie physique des document
 		               // ************************************
 		                  try{
-		                	  File doss = new File("C:\\root\\");
-		                	  if(!doss.exists())
-		                		  doss.mkdir();
 		                      File f2 = new File("C:\\root\\"+f.getName());
 		                      InputStream in = new FileInputStream(f);
 
