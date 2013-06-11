@@ -30,15 +30,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.Element;
-import com.SQLiteDemo;
-
 import core.Ged;
-import javax.swing.JScrollBar;
+import javax.swing.JComboBox;
 
 
 public class MainWindow1 {
 
 	private Ged ged = new Ged();
+	MainWindow1 mw = this;
 	private Element ele;
 	public JFrame frmGed;
 	private JTextField textField;
@@ -55,17 +54,23 @@ public class MainWindow1 {
   	  		//ged.gedBD.CreateTables();
   	  	//else
   	  		ged.gedBD.getElements();
+  	  		/*for(int i=0;i<ged.getListSize();i++){
+  	  			ged.gedBD.ImporterTag(ged.getList().get(i));
+  	  			ged.gedBD.ImporterSerie(ged.getList().get(i));
+  	  		}*/
+  	  			
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "serial", "unchecked" })
 	private void initialize() {
 		
 		frmGed = new JFrame();
 		frmGed.setTitle("GED");
-		frmGed.setBounds(100, 100, 846, 563);
+		frmGed.setBounds(100, 100, 813, 502);
 		frmGed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGed.getContentPane().setLayout(null);
 		
@@ -80,7 +85,7 @@ public class MainWindow1 {
 		btnRechercher.setBounds(261, 68, 117, 34);
 		frmGed.getContentPane().add(btnRechercher);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setBounds(465, 110, 320, 345);
 		panel.setBorder((Border) new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Metadonnees", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		frmGed.getContentPane().add(panel);
@@ -117,21 +122,63 @@ public class MainWindow1 {
 		final JLabel lblNewLabel_2 = new JLabel("N/A");
 		lblNewLabel_2.setBounds(140, 102, 109, 16);
 		panel.add(lblNewLabel_2);
+		final JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setBounds(140, 159, 109, 20);
+		panel.add(comboBox);
 		
-		final JLabel lblNewLabel_3 = new JLabel("N/A");
-		lblNewLabel_3.setBounds(140, 161, 61, 16);
-		panel.add(lblNewLabel_3);
+		final JComboBox<String> comboBox_1 = new JComboBox<String>();
+		comboBox_1.setBounds(140, 233, 109, 20);
+		panel.add(comboBox_1);
 		
-		final JLabel lblNewLabel_4 = new JLabel("N/A");
-		lblNewLabel_4.setBounds(140, 235, 127, 16);
-		panel.add(lblNewLabel_4);
+		JButton btnNewButton_1 = new JButton("Ouvrir");
+		btnNewButton_1.setBounds(17, 285, 135, 49);
+		panel.add(btnNewButton_1);
+		btnNewButton_1.setIcon(new ImageIcon("images/ouvrir.jpg"));
+		
+		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBounds(193, 285, 117, 49);
+		panel.add(btnModifier);
+		btnModifier.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				SwingUtilities.invokeLater(new Runnable()
+			    {
+			      public void run()
+			      {
+			    	  if(ele != null){
+							MetaWindow frame = new MetaWindow(ged, ele.getTitre());
+							frame.setVisible(true);
+						}
+						else {
+							String st="Aucun element choisit";
+							JOptionPane.showMessageDialog(null,st);
+						}
+			      }
+			    });
+			}
+		});
+		btnModifier.setIcon(new ImageIcon("images/custom_dialog.png"));
+		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent arg0) {
+				File f = new File("C:\\root\\"+ele.getTitre());
+				if(f.canExecute()){
+					Desktop dt = Desktop.getDesktop();
+				    try {
+						dt.open(f);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+					
+			}
+		});
 		
 		final JLabel lblNewLabel_5 = new JLabel("Apperçu non valable");
 		lblNewLabel_5.setIcon(new ImageIcon("images/dossier_GED.png"));
-		lblNewLabel_5.setBounds(10, 22, 130, 309);
+		lblNewLabel_5.setBounds(10, 22, 130, 126);
 		
 		final JPanel panel_1 = new JPanel();
-		panel_1.setBounds(288, 113, 150, 342);
+		panel_1.setBounds(288, 113, 150, 159);
 		panel_1.setBorder(new TitledBorder(null, "Aper\u00E7u", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		frmGed.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -149,7 +196,7 @@ public class MainWindow1 {
 		btnNewButton.setIcon(new ImageIcon("images/icone_partager.png"));
 		frmGed.getContentPane().add(btnNewButton);
 		
-		JList<?> list = new JList();
+		JList list = new JList();
 		list.setBounds(26, 258, 130, -47);
 		frmGed.getContentPane().add(list);
 		
@@ -159,8 +206,6 @@ public class MainWindow1 {
 		//manipulateur de selection des element de la liste
 		class MonListSelectionListener implements ListSelectionListener
 		{
-			
-
 			public void valueChanged(ListSelectionEvent e)
 			{
 				//System.out.println("doc_choisi:" + list_1.getSelectedValue() );
@@ -170,8 +215,10 @@ public class MainWindow1 {
 				lblNewLabel.setText(ele.getTitre());
 				lblNewLabel_1.setText(ele.getAuteur());
 				lblNewLabel_2.setText(ele.getDate());
-				lblNewLabel_3.setText(ele.tagstoString());
-				lblNewLabel_4.setText(ele.seriestoString());
+				for(int i=0;i<ele.getTags().size();i++)
+				comboBox.addItem(ele.getTags().get(i));
+				for(int i=0;i<ele.getSeries().size();i++)
+					comboBox_1.addItem(ele.getSeries().get(i));
 				switch(ele.getType()){
 				case "document" : 
 					break;
@@ -204,47 +251,6 @@ public class MainWindow1 {
 		list_1.setToolTipText("");
 		list_1.setBorder(new TitledBorder(null, "Documents", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		frmGed.getContentPane().add(list_1);
-		
-		
-		JButton btnNewButton_1 = new JButton("Ouvrir");
-		btnNewButton_1.setBounds(558, 465, 135, 49);
-		btnNewButton_1.setIcon(new ImageIcon("images/ouvrir.jpg"));
-		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent arg0) {
-				File f = new File("C:\\root\\"+ele.getTitre());
-				if(f.canExecute()){
-					Desktop dt = Desktop.getDesktop();
-				    try {
-						dt.open(f);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-					
-			}
-		});
-		frmGed.getContentPane().add(btnNewButton_1);
-		
-		JButton btnModifier = new JButton("Modifier");
-		btnModifier.setBounds(703, 465, 117, 49);
-		btnModifier.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if(ele != null){
-					MetaWindow frame = new MetaWindow(ged, ele.getTitre());
-					frame.setVisible(true);
-				}
-				
-				else {
-					String st="Aucun element choisit";
-					JOptionPane.showMessageDialog(null,st);
-				}
-			}
-		});
-		btnModifier.setIcon(new ImageIcon("images/custom_dialog.png"));
-		frmGed.getContentPane().add(btnModifier);
-		
-		
 		// Action listener du bouton ajout
 		btnAjouterDocument.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent arg0) {
@@ -258,16 +264,12 @@ public class MainWindow1 {
 		                  f = jFileChooser1.getSelectedFile();
 		                  System.out.println(f.getName());
 		                  System.out.println(f.getAbsolutePath());
-		                  try {
 							ged.ajouterElement(f);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						if(ged.ajouterElement(f)){	
 		                //creation ou modification des metadonnées
 		                  MetaWindow frame = new MetaWindow(ged,f.getName());
 		  				  frame.setVisible(true);
-		  				  
+						}
 		               // copie physique des document
 		               // ************************************
 		                  try{
@@ -294,19 +296,15 @@ public class MainWindow1 {
 		                    catch(IOException e){
 		                      System.out.println(e.getMessage());      
 		                    }
-		                  
+		                //actualisation de la liste
+		                  list_1.setModel(new javax.swing.AbstractListModel() {
+		          			String[] values= ged.gedToTable(ged.getList());
+		                      public int getSize() { return ged.getListSize(); }
+		                      public Object getElementAt(int i) { return values[i]; }
+		          		});
 			      }
 			    });
 				
-				//***************************************
-				
-				//actualisation de la liste
-                list_1.setModel(new javax.swing.AbstractListModel() {
-        			String[] values= ged.gedToTable(ged.getList());
-                    public int getSize() { return ged.getListSize(); }
-                    public Object getElementAt(int i) { return values[i]; }
-
-        		});
 			}
 		});
 		

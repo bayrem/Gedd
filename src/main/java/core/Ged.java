@@ -3,12 +3,14 @@ package core;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import com.*;
 
 public class Ged {
@@ -17,6 +19,7 @@ public class Ged {
 	private List<Element> rechList;
 	private List<Tag> tags;
 	private List<Serie> series;
+	public String[] t;
 	public SQLiteDemo gedBD = new SQLiteDemo(this);
 	
 	public boolean addTag(String s, String str){
@@ -59,7 +62,7 @@ public class Ged {
 		
 	}
 	
-	public void ajouterElement(File f) throws IOException{
+	public boolean ajouterElement(File f) {
 		Element elem;
 		
 		//recuperation de l'extension
@@ -84,6 +87,9 @@ public class Ged {
 			
 		case "wmv": elem = new Video(f.getName()); elem.setDate(dateFormat.format(date));
 		break;
+		
+		case "mp4": {String st="Ce type n'est pas supporte";
+		JOptionPane.showMessageDialog(null,st);return false;}
 
 		default: elem = new Doc(f.getName()); elem.setDate(dateFormat.format(date));
 			break;
@@ -104,7 +110,8 @@ public class Ged {
 			this.gedBD.InsertTag(elem, elem.getTags().get(i));
 		for(int j=0;j<elem.getSeries().size();j++)
 			this.gedBD.InsertSerie(elem, elem.getSeries().get(j));
-		
+	
+		return true;
 	}
 	
 	public String[] gedToTable(List<Element> lst){
@@ -112,6 +119,16 @@ public class Ged {
 		for (int i=0; i<lst.size();i++)
 			elem[i] = lst.get(i).getTitre();
 		return elem;
+	}
+	
+	public List<Tag> getTags(){
+		
+		return this.tags;
+	}
+	
+public List<Serie> getSerie(){
+		
+		return this.series;
 	}
 	
 	public List<Element> getList(){
@@ -158,7 +175,6 @@ public class Ged {
 						}
 					}	
 				}
-				//********************************************
 	}
 	
 	private void rechercheParSerie(String rech){

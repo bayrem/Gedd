@@ -1,14 +1,8 @@
 package main;
 
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import gui.*;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-import core.Ged;
 
 public class Main {
 

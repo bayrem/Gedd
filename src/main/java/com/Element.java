@@ -92,6 +92,13 @@ public abstract class Element {
 		return s;
 	}
 	
+	public String[] listToTable(List<String> lst){
+		String[] elem = new String[lst.size()] ;
+		for (int i=0; i<lst.size();i++)
+			elem[i] = lst.get(i);
+		return elem;
+	}
+	
 	public String seriestoString(){
 		String s="";
 		if(!series.isEmpty())

@@ -147,6 +147,7 @@ public class MetaWindow extends JFrame {
 								String str = s.substring(j, i1);
 								j=i1+1;
 									ged.addTag(str, ged.getList().get(i).getTitre());
+									ged.gedBD.InsertTag(ged.getList().get(i), str);
 							}
 						}
 						
@@ -158,12 +159,12 @@ public class MetaWindow extends JFrame {
 								String str = ser.substring(j1, i1);
 								j1=i1+1;
 									ged.addSerie(str, ged.getList().get(i).getTitre());
+									ged.gedBD.InsertSerie(ged.getList().get(i), str);
 							}
 						}
 						ged.gedBD.setElement(ged.getList().get(i), titre);
 					}
-						
-				ged.afficherElements();
+				ged.t = getValues();
 				dispose();
 			}
 		});
@@ -187,4 +188,10 @@ public class MetaWindow extends JFrame {
 		panel.add(textField_4);
 		textField_4.setColumns(10);
 	}
+	
+	public String[] getValues(){
+		String[] t = {textField.getText(),textField_1.getText(),textField_2.getText(),textField_3.getText(),textField_4.getText()};
+		return t;
+	}
+	
 }
